@@ -20,6 +20,18 @@ Index(['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
 #numpy는 숫자
 import pandas as pd
 import numpy as np
+#sklearn -> 테스트 데이터 제공
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+#classifier 분류
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn import metrics
+
 
 class TitanicModel:
     def __init__(self):
@@ -201,5 +213,72 @@ class TitanicModel:
         train["FareBand"] = pd.qcut(train['Fare'], 4, labels={1, 2, 3, 4})
         test["FareBand"] = pd.qcut(train['Fare'], 4, labels={1, 2, 3, 4})
         return [train, test]
+
+
+    # 검증 알고리즘 작성
+    #hook 배치와 같이 일괄적으로 실행 하는 것
+    def hook_test(self, model, dummy):
+        print('KNN 활요한 검증 정확도 {} %'.format(self.accuracy_by_knn(model, dummy)))
+        print('결정트리 활용한 검증 정확도 {} %'.format(self.accuracy_by_detree(model, dummy)))
+        print('랜덤포리스트 활용한 검증 정확도 {} %'.format(self.accuracy_by_rforest(model, dummy)))
+        print('나이브베이즈 활용한 검증 정확도 {} %'.format(self.accuracy_by_nb(model, dummy)))
+        print('SVM 활용한 검증 정확도 {} %'.format(self.accuracy_by_svm(model, dummy)))
+
+    @staticmethod
+    def create_k_fold():
+        k_fold = KFold(n_splits=10, shuffle=True, random_state=0)
+        return k_fold
+
+    @staticmethod
+    def create_random_variables(train, X_feature, Y_feature) ->[]:
+        the_X_feature = X_feature
+        the_Y_feature = Y_feature
+        train2, test2 = train_test_split(train, test_size=0.3, random_state=0)
+        train_X = train2[the_X_feature]
+        train_Y = train2[the_Y_feature]
+        test_X = test2[the_X_feature]
+        test_Y = test2[the_Y_feature]
+        return[train_X, train_Y, test_X, test_Y]
+
+    def accuracy_by_knn(self, model, dummy):
+        clf = KNeighborsClassifier(n_neighbors=13)
+        scoring = 'accuracy'
+        k_fold = self.create_k_fold()
+        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
+        accuracy = round(np.mean(score) * 100, 2)
+        return accuracy
+
+    def accuracy_by_detree(self, model, dummy):
+        clf = DecisionTreeClassifier()
+        scoring = 'accuracy'
+        k_fold = self.create_k_fold()
+        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
+        accuracy = round(np.mean(score) * 100, 2)
+        return accuracy
+
+    def accuracy_by_rforest(self, model, dummy):
+        #생존자와 사망자를 이분법으로 구분
+        clf = RandomForestClassifier(n_estimators=13)
+        scoring = 'accuracy'
+        k_fold = self.create_k_fold()
+        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
+        accuracy = round(np.mean(score) * 100, 2)
+        return accuracy
+
+    def accuracy_by_nb(self, model, dummy):
+        clf = GaussianNB()
+        scoring = 'accuracy'
+        k_fold = self.create_k_fold()
+        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
+        accuracy = round(np.mean(score) * 100, 2)
+        return accuracy
+
+    def accuracy_by_svm(self, model, dummy):
+        clf = SVC()
+        scoring = 'accuracy'
+        k_fold = self.create_k_fold()
+        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
+        accuracy = round(np.mean(score) * 100, 2)
+        return accuracy
 
 

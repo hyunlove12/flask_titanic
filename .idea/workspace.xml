@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="477741dd-c32b-436e-8ff7-8b0fc23924a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/view.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +138,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
